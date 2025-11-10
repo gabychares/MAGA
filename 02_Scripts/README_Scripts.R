@@ -1,1 +1,1 @@
-# Aquí pondremos las instrucciones de la carpeta de scripts
+# Aquí pondremos las instrucciones de la carpeta de scripts.
