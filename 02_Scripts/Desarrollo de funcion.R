@@ -67,6 +67,8 @@ maga <- function (data) {
      
      print ("A continuación se mostrarán 4 gráficas, que deben cumplir lo siguiente:")
      
+     # Muestra los supuestos del anova para que este análisis tenga confiabilidad
+     
      message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
      print("Los números que aparecen en la  gráfica a lado de la bolita representa el renglón en el que se encuentra ese residual; Scale Location debería tener pendiente de con tendencia a 0")
      
@@ -101,7 +103,7 @@ maga <- function (data) {
       geom_point () + # Agrega los puntos de la regresión en el formato predeterminado
       geom_smooth (method = "lm", se = T) # Añade la línea de la regresión
     print (figuraregresion)
-    
+    # Supuestos del análisis
     message("Ahora hay que checar los supuestos:")
     print ("La varianza en Y es constante, el efecto de x es proporcionalmente igual en cualquier punto de y")
     print ("Los residuales del modelos (error) se ajustan a una distribución gaussiana")
@@ -117,7 +119,7 @@ maga <- function (data) {
     
     figuratc <- ggplot (data, aes (.data [[dep]], fill = .data [[ind]])) +
       geom_bar (stat = "count", position = "stack")
-    figuratc
+    figuratc # Visualización de la gráfica con la tabla de contingencia
   
   } else if (analisis == "c") { # Hace el ANCOVA y genera las gráficas para verificar el cumplimiento de los supuestos
     
@@ -164,7 +166,7 @@ maga <- function (data) {
     message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
     
   }
-  else ("Vuelve a cargar la función para introducir nuevamente tus datos")
+  else ("Vuelve a cargar la función para introducir nuevamente tus datos") # Esta línea permite al usuario finalizar la operación en caso de haber cometido un error al introducir los datos
 }
 
 maga (frijoles) # Ejemplo de uso de la función
