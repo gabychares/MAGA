@@ -33,7 +33,7 @@ maga <- function (data) {
   
   # Después de que se le dan las mejores opciones al usuario, se hace el análisis que este indique
   
-  message ("anova = a, ancova = c, glm = g, prueba de t = t, correlación = cr, regresión = r, tablas de contingencia = tc")
+  message ("anova = a, ancova = c, prueba de t = t, regresión = r, tablas de contingencia = tc")
   readline (prompt = "¿Qué analisis vas hacer? ") -> analisis
   
   if(analisis == "t"){ # Hace la prueba de t
