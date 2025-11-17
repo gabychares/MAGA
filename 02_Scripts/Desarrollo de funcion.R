@@ -3,6 +3,7 @@
 # que esta estudiando se determine el análisis estadístico que mejor se acople.
 
 library (ggplot2)
+
 library (gmodels)
 
 maga <- function (data) {
@@ -84,7 +85,7 @@ maga <- function (data) {
      message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
      
   } else if (analisis == "r") { # Hace el análisis de regresión lineal y genera la gráfica del análisis
-    
+    message("Requieres el paquete ggplot2 precargado")
     readline (prompt = "Introduce el nombre de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
     readline (prompt = "Introduce el nombre de tu variable independiente, tal como aparece en tu base de datos ") -> ind
     
@@ -100,6 +101,11 @@ maga <- function (data) {
       geom_point () + # Agrega los puntos de la regresión en el formato predeterminado
       geom_smooth (method = "lm", se = T) # Añade la línea de la regresión
     print (figuraregresion)
+    
+    message("Ahora hay que checar los supuestos:")
+    print ("La varianza en Y es constante, el efecto de x es proporcionalmente igual en cualquier punto de y")
+    print ("Los residuales del modelos (error) se ajustan a una distribución gaussiana")
+   message("Si no se cumple uno se debe buscar otro tipo de análisis")
     
   } else if (analisis == "tc") { # Hace el análisis de tabla de contingencia
     
