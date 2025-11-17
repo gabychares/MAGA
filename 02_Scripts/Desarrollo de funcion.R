@@ -97,16 +97,13 @@ maga <- function (data) {
     
   } else if (analisis == "tc") { # Hace el análisis de tabla de contingencia
     
-    readline (prompt = "Introduce el número de columna de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
-    readline (prompt = "Introduce el número de columna de tu variable independiente, tal como aparece en tu base de datos ") -> ind
-    
-    dep <- as.numeric (dep)
-    ind <- as.numeric (ind)
+    readline (prompt = "Introduce el nombre de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
+    readline (prompt = "Introduce el nombre de tu variable independiente, tal como aparece en tu base de datos ") -> ind
     
     CrossTable (data [, dep], data [, ind], digits = 5, expected = T, chisq = T)
     
     figuratc <- ggplot (data, aes (.data [[dep]], fill = .data [[ind]])) +
-      geom_bar (stat = "count", position = "stack") +
+      geom_bar (stat = "count", position = "stack")
     figuratc
   
   }
@@ -114,6 +111,4 @@ maga <- function (data) {
   
 }
 
-maga () # Ejemplo de uso de la función
-
-micofrijoles <- read.csv ("01_RawData/micofrijoles.csv")
+maga (micofrijoles) # Ejemplo de uso de la función
