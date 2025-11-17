@@ -114,13 +114,50 @@ maga <- function (data) {
   
   } else if (analisis == "c") { # Hace el ANCOVA y genera las gráficas para verificar el cumplimiento de los supuestos
     
-    ancova <- aov (peso_seco ~ suelo*frijol + peso_semilla, frijol_2023)
-    # Y (respuesta) ~ A (factor) * B (factor) + Z (covariable)
-    summary (ancova)
+    readline (prompt = "Introduce el número de columna de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
+    readline (prompt = "Introduce el número de columna de tu variable independiente, tal como aparece en tu base de datos ") -> ind
+    readline (prompt = "Introduce el número de columna de tu covariable, tal como aparece en tu base de datos ") -> cov
+    
+    dep <- as.numeric (dep)
+    ind <- as.numeric (ind)
+    cov <- as.numeric (cov)
+    
+    ancova <- aov (data [, dep] ~ data [ , ind] + data [, cov], data) # aov hace el ancova
+    
+    message ("Resultados del análisis:")
+    
+    summaryancova <- summary (ancova) # Muestra los resultados del ancova de manera más fácil de visualizar
+    print (summaryancova)
+    
+    readline (prompt = "Presiona enter para continuar")
+    
+    print ("A continuación se mostrarán 4 gráficas, que deben cumplir lo siguiente:")
+    
+    message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
+    print("Los números que aparecen en la  gráfica a lado de la bolita representa el renglón en el que se encuentra ese residual; Scale Location debería tener pendiente de con tendencia a 0")
+    
+    message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
+    print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
+    
+    message ("Residuals vs Leverage (influencia) de los valores en el análisis o son pseudoréplicas; es para el tercer supuesto (Hay independencia entre los errores y las observaciones):")
+    print ("Si no se observa el enunciado de Distancia de Cook: nos representa que no hay un valor que sobresalga en la influencia de los valores, por lo que se cumple el supuesto.")
+    
+    # nos da las gráficas por separado
+    #Ver todas las gráficas en un mismo lugar
+    plot(ancova)
+    layout(matrix(c(1,2,3,4),2,2,))
+    plot(ancova)
+    
+    message ("Por último, se debe cumplir el supuesto: Los factores no afectan a la covariable. Esto se verifica con un anova de una vía. Si el valor de p es mayor a 0.05, el supuesto se cumple")
+    
+    supuesto4 <- aov (data [, cov] ~ data [ , ind], data) 
+    summarysup4 <- summary (supuesto4)
+    print (summarysup4)
+    
+    message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
     
   }
-    
   
 }
 
-maga (micofrijoles) # Ejemplo de uso de la función
+maga (frijoles) # Ejemplo de uso de la función
