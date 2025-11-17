@@ -27,8 +27,7 @@ maga <- function(){
    readline (prompt = "Introduce tu variable dependiente") 
    readline (prompt = "Introduce tu variable independiente") 
    print ("Ahora introduce en la siguiente función de R tus datos de esta manera:Base de datos$variable dependiente, mu= el promedio de tu hipotesis nula: t.student ()")
-  }else if ( analisis == "anova" )
-    
+  }else if ( analisis == )
   #Supuestos de los análisis
    
    
