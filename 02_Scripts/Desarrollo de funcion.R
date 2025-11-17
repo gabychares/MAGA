@@ -13,17 +13,23 @@ maga <- function (data) {
   readline(prompt= "¿Qué tipo de variable independiente estas usando? (c = continua / d = discreta) ") -> independiente
   readline (prompt = "¿Estás usando una covariable? (s/n) ") -> covariable
 
-    if (dependiente == "c" & independiente == "d"){
-    readline (prompt= "¿cantidad de variables dependientes?")-> vnum
-    if(vnum >=2 ){
-      print("Te recomendamos hacer un ANOVA o glm")
-    }else if (vnum== 1){
-      print ("Te recomendamos hacer una prueba de t")}
-  }else if  (dependiente == "c" & independiente == "c"){
-    print("Te recomendamos hacer un glm, correlación o regresión")
-  }else if (dependiente == "d" & independiente == "d" ){
-    print("Te recomendamos hacer un análisis de tablas de contingencia")
-  }
+    if (dependiente == "c" & independiente == "d" & covariable == "s"){ # Código para recomendar ANCOVA
+      print("Te recomendamos hacer un ANCOVA")
+      
+      } else if (dependiente == "c" & independiente == "d"){ # Código para recomendar ANOVA o prueba de t
+        readline (prompt= "¿Cuántas muestras estás comparando?")-> vnum
+        if(vnum >= 2 ){ 
+          print("Te recomendamos hacer un ANOVA")
+        }else if (vnum == 1){
+            print ("Te recomendamos hacer una prueba de t")}
+        
+      }else if  (dependiente == "c" & independiente == "c"){ # Código para recomendar regresión lineal
+        print("Te recomendamos hacer una regresión lineal")
+        
+      }else if (dependiente == "d" & independiente == "d" ){ # Código para recomendar tablas de contingencia
+        print("Te recomendamos hacer un análisis de tablas de contingencia")
+      
+      }
   
   # Después de que se le dan las mejores opciones al usuario, se hace el análisis que este indique
   
@@ -106,6 +112,12 @@ maga <- function (data) {
       geom_bar (stat = "count", position = "stack")
     figuratc
   
+  } else if (analisis == "c") { # Hace el ANCOVA y genera las gráficas para verificar el cumplimiento de los supuestos
+    
+    ancova <- aov (peso_seco ~ suelo*frijol + peso_semilla, frijol_2023)
+    # Y (respuesta) ~ A (factor) * B (factor) + Z (covariable)
+    summary (ancova)
+    
   }
     
   
