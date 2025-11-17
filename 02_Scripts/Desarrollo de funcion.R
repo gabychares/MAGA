@@ -2,6 +2,7 @@
 # Se tiene como idea que a partir de una función en la cual el usuario introduzca los datos de las variables 
 # que esta estudiando se determine el análisis estadístico que mejor se acople.
 
+library (ggplot2)
 
 maga <- function (data) {
   
@@ -32,9 +33,11 @@ maga <- function (data) {
     
    readline (prompt = "Introduce el número de columna de tu variable dependiente, tal como aparece en tu base de datos ") -> dep 
    readline (prompt = "Introduce el número de columna de tu variable independiente, tal como aparece en tu base de datos ") -> ind 
-   dep <- as.numeric (dep)
+   
+   dep <- as.numeric (dep) # Esto hace coerción del objeto para que sea considerado numérico, y podamos utilizarlo en la función
    ind <- as.numeric (ind)
-   t.test (data [, dep] ~ data [ , ind], data)
+  
+    t.test (data [, dep] ~ data [ , ind], data) # Indica que la primera variable se encuentra en la base de datos "data", y abarca todos los renglones de la columna indicada por el usuario
    
    
    } else if (analisis == "a") { # Hace el ANOVA y genera las gráficas para verificar el cumplimiento de los supuestos
@@ -45,11 +48,11 @@ maga <- function (data) {
      dep <- as.numeric (dep)
      ind <- as.numeric (ind)
      
-     anova <- aov (data [, dep] ~ data [ , ind], data)
+     anova <- aov (data [, dep] ~ data [ , ind], data) # aov hace el anova
      
      message ("Resultados del análisis:")
      
-     summaryanova <- summary (anova)
+     summaryanova <- summary (anova) # Muestra los resultados del anova de manera más fácil de visualizar
      print (summaryanova)
      
      readline (prompt = "Presiona enter para continuar")
@@ -73,7 +76,23 @@ maga <- function (data) {
      
      message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
      
-  } else if (analisis == "c") { # Hace el ANCOVA y genera las gráficas para verificar el cumplimiento de los supuestos
+  } else if (analisis == "r") { # Hace el análisis de regresión lineal y genera la gráfica del análisis
+    
+    readline (prompt = "Introduce el nombre de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
+    readline (prompt = "Introduce el nombre de tu variable independiente, tal como aparece en tu base de datos ") -> ind
+    
+    formula <- as.formula (paste (dep, "~", ind)) # Esto genera la fórmula que se utilizará en el análisis de regresión. Es importante hacer la coerción porque la función lm no reconoce el texto obtenido del prompt como un argumento.
+    
+    regresion <- lm (formula, data) # lm hace la regresión
+    
+    sreg <- summary (regresion) # Da un resumen estadístico de los resultados del lm
+    print (sreg)
+
+    
+    figuraregresion <- ggplot (data, aes (.data [[ind]], .data [[dep]])) + # Basado en la página de ggplot2 (Define Aesthetic Mappings Programmatically — Aes_, s. f.). Referencias disponibles en el archivo README_Scripts.
+      geom_point () + # Agrega los puntos de la regresión en el formato predeterminado
+      geom_smooth (method = "lm", se = T) # Añade la línea de la regresión
+    print (figuraregresion)
     
     
   }
@@ -81,4 +100,4 @@ maga <- function (data) {
   
 }
 
-maga (ChickWeight) # Ejemplo de uso de la función
+maga (Orange) # Ejemplo de uso de la función
