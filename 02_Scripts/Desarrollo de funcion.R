@@ -3,6 +3,7 @@
 # que esta estudiando se determine el análisis estadístico que mejor se acople.
 
 library (ggplot2)
+library (gmodels)
 
 maga <- function (data) {
   
@@ -94,10 +95,25 @@ maga <- function (data) {
       geom_smooth (method = "lm", se = T) # Añade la línea de la regresión
     print (figuraregresion)
     
+  } else if (analisis == "tc") { # Hace el análisis de tabla de contingencia
     
+    readline (prompt = "Introduce el número de columna de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
+    readline (prompt = "Introduce el número de columna de tu variable independiente, tal como aparece en tu base de datos ") -> ind
+    
+    dep <- as.numeric (dep)
+    ind <- as.numeric (ind)
+    
+    CrossTable (data [, dep], data [, ind], digits = 5, expected = T, chisq = T)
+    
+    figuratc <- ggplot (data, aes (.data [[dep]], fill = .data [[ind]])) +
+      geom_bar (stat = "count", position = "stack") +
+    figuratc
+  
   }
     
   
 }
 
-maga (Orange) # Ejemplo de uso de la función
+maga () # Ejemplo de uso de la función
+
+micofrijoles <- read.csv ("01_RawData/micofrijoles.csv")
