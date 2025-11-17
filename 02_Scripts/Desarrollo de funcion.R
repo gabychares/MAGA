@@ -31,10 +31,13 @@ maga <- function (data) {
   if(analisis == "t"){
   #Introducir bases de datos
     
-   readline (prompt = "Introduce tu variable dependiente, tal como aparece en tu base de datos ") 
-   readline (prompt = "Introduce tu variable independiente, tal como aparece en tu base de datos ") 
-   print ("Ahora introduce en la siguiente función de R tus datos de esta manera:Base de datos$variable dependiente, mu= el promedio de tu hipotesis nula: t.student ()")
- 
+   readline (prompt = "Introduce tu variable dependiente, tal como aparece en tu base de datos ") -> dep 
+   readline (prompt = "Introduce tu variable independiente, tal como aparece en tu base de datos ") -> ind 
+   dep <- as.numeric (dep)
+   ind <- as.numeric (ind)
+   t.test (data [, dep] ~ data [ , ind], data)
+   
+   
    } else if (analisis == "a") {
      
      readline (prompt = "Introduce el número de columna de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
@@ -45,9 +48,21 @@ maga <- function (data) {
      
      anova <- aov (data [, dep] ~ data [ , ind], data)
      
-     message ("Resultados del análisis:")
-    
-     summary (anova)
+     message ("Resultados del análisis:",summary(anova));
+     readline (prompt = "Presiona enter para continuar")
+     message("Ahora hay que checar los supuestos del anova:")
+     # nos da las gráficas por separado
+     #Ver todas las gráficas en un mismo lugar
+     plot(anova)
+     layout(matrix(c(1,2,3,4),2,2,))
+     plot(anova)
+     message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución de residuales en gaussiana (normal):")
+     print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
+     message("Para el segundo supuesto sirven Residuals vs Fitted y Scale Location para ver la homogeneidad de varianzas, los números que aparecen en la  gráfica a lado de la bolita representa")
+     print("el renglón en el que se encuentra ese residual; Scale Location debería tener pendiente de con tendencia a 0")
+     message ("Residuals vs Leverange (influencia) de loa valores en el análisis o son pseudoréplicas; es para el tercer supuesto (Hay independencia entre los errores y las observaciones)")
+     message("Si no se observa el enunciado de Distancia de Cook: nos representa que no hay como un valor que sobresalga en la influencia de los valores.")
+     
      
   }
     
@@ -56,5 +71,5 @@ maga <- function (data) {
    
   #Hacer analisis 
 }
-
+ChickWeight
 maga (ChickWeight) # Ejemplo de uso de la función
