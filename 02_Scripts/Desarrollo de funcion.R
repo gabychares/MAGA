@@ -109,6 +109,7 @@ maga <- function (data) {
     
   } else if (analisis == "tc") { # Hace el análisis de tabla de contingencia
     
+    message("Requieres el paquete gmodels precargado")
     readline (prompt = "Introduce el nombre de tu variable dependiente, tal como aparece en tu base de datos ") -> dep
     readline (prompt = "Introduce el nombre de tu variable independiente, tal como aparece en tu base de datos ") -> ind
     
@@ -163,7 +164,7 @@ maga <- function (data) {
     message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
     
   }
-  
+  else ("Vuelve a cargar la función para introducir nuevamente tus datos")
 }
 
 maga (frijoles) # Ejemplo de uso de la función
