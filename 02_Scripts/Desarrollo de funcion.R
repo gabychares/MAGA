@@ -49,9 +49,11 @@ maga <- function (data) {
    dep <- as.numeric (dep) # Esto hace coerción del objeto para que sea considerado numérico, y podamos utilizarlo en la función
    ind <- as.numeric (ind)
   
-    t.test (data [, dep] ~ data [ , ind], data) # Indica que la primera variable se encuentra en la base de datos "data", y abarca todos los renglones de la columna indicada por el usuario
-   
-   
+    t.student <- t.test (data [, dep] ~ data [ , ind], data) # Indica que la primera variable se encuentra en la base de datos "data", y abarca todos los renglones de la columna indicada por el usuario
+   print (t.student)
+    message("¡Recuerda que un valor de p-value < 0.05 es significativo!")
+    
+    
    } else if (analisis == "a") { # Hace el ANOVA y genera las gráficas para verificar el cumplimiento de los supuestos
      
      readline (prompt = "Introduce el número de columna de tu variable dependiente, tal como aparece en tu base de datos:  ") -> dep
@@ -66,6 +68,7 @@ maga <- function (data) {
      
      summaryanova <- summary (anova) # Muestra los resultados del anova de manera más fácil de visualizar
      print (summaryanova)
+     message("¡Recuerda que un valor de p-value < 0.05 es significativo!")
      
      readline (prompt = "¿Quieres comprobar los supuestos del análisis? (s/n)") -> sup # Permite al usuario decidir cuando iniciar el siguiente paso de la función.
      
@@ -111,6 +114,7 @@ maga <- function (data) {
     
     sreg <- summary (regresion) # Da un resumen estadístico de los resultados del lm
     print (sreg)
+    message("¡Recuerda que un valor de p-value < 0.05 es significativo!")
     
     figuraregresion <- ggplot (data, aes (.data [[ind]], .data [[dep]])) + # Basado en la página de ggplot2 (Define Aesthetic Mappings Programmatically — Aes_, s. f.). Referencias disponibles en el archivo README_Scripts.
       geom_point () + # Agrega los puntos de la regresión en el formato predeterminado
@@ -155,7 +159,7 @@ maga <- function (data) {
     readline (prompt = "Introduce el nombre de tu variable independiente, tal como aparece en tu base de datos:  ") -> ind
     
     CrossTable (data [, dep], data [, ind], digits = 5, expected = T, chisq = T) # Este análisis es muy sensible a decimales, por lo que se usaron 5. expected y chisq son T para que el resultado muestre los valores esperados y el valor del estadístico chi^2
-    
+    message("Recuerda que un valor de p-value <0.05 es significativo!")
     figuratc <- ggplot (data, aes (.data [[dep]], fill = .data [[ind]])) + # La variable dependiente es el eje X, y el eje Y es el conteo de esta. La variable independiente se usa en fill para separar las barras de la variable independiente según la segunda variable.
       geom_bar (stat = "count", position = "stack") # Indica que el eje Y tiene el conteo, y las barras que se separaron por la variable independiente se apilarán.
     figuratc # Visualización de la gráfica con la tabla de contingencia
@@ -176,6 +180,7 @@ maga <- function (data) {
     
     summaryancova <- summary (ancova) # Muestra los resultados del ancova de manera más fácil de visualizar
     print (summaryancova)
+    message("¡Recuerda que un valor de p-value < 0.05 es significativo!")
     
     readline (prompt = "¿Quieres comprobar los supuestos del análisis? (s/n)") -> sup
     
