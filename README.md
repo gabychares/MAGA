@@ -48,22 +48,14 @@ install.packages ("gmodels")
 library (ggplot2)
 library (gmodels)
 
+Incluimos algunas bases de datos que el usuario puede utilizar para probar el funcionamiento de MAGA.
+Precargar las bases de datos para conocer las variables.
+
 #########################################################################################
 
 * 03_Results
 
 En la carpeta 03_Results, se guardarán todos los resultados generados con el código de la carpeta 02_Scripts.
-
-Incluimos algunas bases de datos que el usuario puede utilizar para probar el funcionamiento de MAGA
-
-Precargar las bases de datos para conocer las variables.
-
-maga (ChickWeight) # Usa esta base de datos para hacer un anova
-maga (biostat) # Usa esta base de datos para hacer una prueba de t
-maga (Orange) # Usa esta base de datos para hacer una regresión lineal
-maga (frijoles) # Usa esta base de datos para ancova y tablas de contingencia, (Garrido, 2023). 
-
-# Estas bases de datos se encuentran en la carpeta de RawData 
 
 #########################################################################################
 

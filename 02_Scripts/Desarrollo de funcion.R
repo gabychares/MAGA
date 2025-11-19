@@ -29,7 +29,10 @@ maga <- function (data) {
       }else if (dependiente == "d" & independiente == "d" ){ # Código para recomendar tablas de contingencia
         print("Te recomendamos hacer un análisis de tablas de contingencia")
       
-      } # Fin del código para generar recomendaciones
+      } else {
+        print ("Lo sentimos, no tenemos recomendaciones para este caso")
+      }
+        # Fin del código para generar recomendaciones
   
   # Después de que se le dan las mejores opciones al usuario, se hace el análisis que este indique
   
@@ -64,29 +67,36 @@ maga <- function (data) {
      summaryanova <- summary (anova) # Muestra los resultados del anova de manera más fácil de visualizar
      print (summaryanova)
      
-     readline (prompt = "Presiona enter para continuar") # Permite al usuario decidir cuando iniciar el siguiente paso de la función.
+     readline (prompt = "¿Quieres comprobar los supuestos del análisis? (s/n)") -> sup # Permite al usuario decidir cuando iniciar el siguiente paso de la función.
      
-     print ("A continuación se mostrarán 4 gráficas, que deben cumplir lo siguiente:")
+     if (sup == "s") {
      
-     # Muestra los supuestos del anova para que este análisis tenga confiabilidad
-     
-     message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
-     print("Los números que aparecen en la  gráfica a lado de cada punto representan el renglón en el que se encuentra ese residual; Ambas gráficas deben tener una línea con pendiente con tendencia a 0, y los puntos deben estar bien distribuidos en los ejes X y Y")
-     
-     message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
-     print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
-     
-     message ("Residuals vs Leverage: determina la influencia de los valores en el análisis o si hay pseudoréplicas; es para el tercer supuesto (Hay independencia entre los errores y las observaciones):")
-     print ("Si no se observa el enunciado de Distancia de Cook: nos representa que no hay un valor que sobresalga en la influencia de los valores, por lo que se cumple el supuesto.")
-     
-     # Primero nos da las gráficas por separado
-     # Y luego muestra todas las gráficas en un mismo plot
-     
-     plot(anova)
-     layout(matrix(c(1,2,3,4),2,2,))
-     plot(anova)
-     
-     message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable") # Fin del análisis
+       print ("A continuación se mostrarán 4 gráficas, que deben cumplir lo siguiente:")
+       
+       # Muestra los supuestos del anova para que este análisis tenga confiabilidad
+       
+       message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
+       print("Los números que aparecen en la  gráfica a lado de cada punto representan el renglón en el que se encuentra ese residual; Ambas gráficas deben tener una línea con pendiente con tendencia a 0, y los puntos deben estar bien distribuidos en los ejes X y Y")
+       
+       message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
+       print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
+       
+       message ("Residuals vs Leverage: determina la influencia de los valores en el análisis o si hay pseudoréplicas; es para el tercer supuesto (Hay independencia entre los errores y las observaciones):")
+       print ("Si no se observa el enunciado de Distancia de Cook: nos representa que no hay un valor que sobresalga en la influencia de los valores, por lo que se cumple el supuesto.")
+       
+       # Primero nos da las gráficas por separado
+       # Y luego muestra todas las gráficas en un mismo plot
+       
+       plot(anova)
+       layout(matrix(c(1,2,3,4),2,2,))
+       plot(anova)
+       
+       message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable") # Fin del análisis
+         
+     } else {
+       
+      }
+    
      
   } else if (analisis == "r") { # Hace el análisis de regresión lineal y genera la gráfica del análisis
     
@@ -101,7 +111,6 @@ maga <- function (data) {
     
     sreg <- summary (regresion) # Da un resumen estadístico de los resultados del lm
     print (sreg)
-
     
     figuraregresion <- ggplot (data, aes (.data [[ind]], .data [[dep]])) + # Basado en la página de ggplot2 (Define Aesthetic Mappings Programmatically — Aes_, s. f.). Referencias disponibles en el archivo README_Scripts.
       geom_point () + # Agrega los puntos de la regresión en el formato predeterminado
@@ -110,24 +119,33 @@ maga <- function (data) {
     
     # Supuestos del análisis
     
-    print ("Ahora hay que checar los supuestos:")
-    message ("La varianza en Y es constante, el efecto de x es proporcionalmente igual en cualquier punto de y")
-    message ("Los residuales del modelos (error) se ajustan a una distribución gaussiana")
+    readline (prompt = "¿Quieres comprobar los supuestos del análisis? (s/n)") -> sup
     
-    print ("A continuación se mostrarán 3 gráficas, que deben cumplir lo siguiente:")
+    if (sup == "s") {
+      
+      print ("Ahora hay que checar los supuestos:")
+      message ("La varianza en Y es constante, el efecto de x es proporcionalmente igual en cualquier punto de y")
+      message ("Los residuales del modelos (error) se ajustan a una distribución gaussiana")
+      
+      print ("A continuación se mostrarán 3 gráficas, que deben cumplir lo siguiente:")
+      
+      message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
+      print("Los números que aparecen en la  gráfica a lado de cada punto representan el renglón en el que se encuentra ese residual; Ambas gráficas deben tener una línea con pendiente con tendencia a 0, y los puntos deben estar bien distribuidos en los ejes X y Y")
+      
+      message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
+      print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
+      
+      message ("En regresión lineal, no es necesario que se cumpla el supuesto de pseudoréplicas, ignorar gráfica 4")
+      
+      layout(matrix (c(1,2,3), 1, 3))
+      plot (regresion)
+      
+      message("Si no se cumple uno de los supuestos, los resultados no son confiables y se debe buscar otro tipo de análisis")
+      
+    } else {
+      
+    }
     
-    message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
-    print("Los números que aparecen en la  gráfica a lado de cada punto representan el renglón en el que se encuentra ese residual; Ambas gráficas deben tener una línea con pendiente con tendencia a 0, y los puntos deben estar bien distribuidos en los ejes X y Y")
-    
-    message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
-    print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
-    
-    message ("En el ANCOVA, no es necesario que se cumpla el supuesto de pseudoréplicas, ignorar gráfica 4")
-    
-    layout(matrix (c(1,2,3), 1, 3))
-    plot (ancova)
-    
-   message("Si no se cumple uno de los supuestos, los resultados no son confiables y se debe buscar otro tipo de análisis")
     
   } else if (analisis == "tc") { # Hace el análisis de tabla de contingencia
     
@@ -159,33 +177,40 @@ maga <- function (data) {
     summaryancova <- summary (ancova) # Muestra los resultados del ancova de manera más fácil de visualizar
     print (summaryancova)
     
-    readline (prompt = "Presiona enter para continuar")
+    readline (prompt = "¿Quieres comprobar los supuestos del análisis? (s/n)") -> sup
     
-    print ("A continuación se mostrarán 4 gráficas, que deben cumplir lo siguiente:")
-    
-    message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
-    print("Los números que aparecen en la  gráfica a lado de cada punto representan el renglón en el que se encuentra ese residual; Ambas gráficas deben tener una línea con pendiente con tendencia a 0, y los puntos deben estar bien distribuidos en los ejes X y Y")
-    
-    message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
-    print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
-    
-    message ("Residuals vs Leverage (influencia) de los valores en el análisis o son pseudoréplicas; es para el tercer supuesto (Hay independencia entre los errores y las observaciones):")
-    print ("Si no se observa el enunciado de Distancia de Cook: nos representa que no hay un valor que sobresalga en la influencia de los valores, por lo que se cumple el supuesto.")
-    
-    # Nos da las gráficas por separado
-    # Y después muestra todas las gráficas en un mismo plot
-    
-    plot(ancova)
-    layout(matrix(c(1,2,3,4),2,2,))
-    plot(ancova)
-    
-    message ("Por último, se debe cumplir el supuesto: Los factores no afectan a la covariable. Esto se verifica con un anova de una vía. Si el valor de p es mayor a 0.05, el supuesto se cumple")
-    
-    supuesto4 <- aov (data [, cov] ~ data [ , ind], data) # Analiza si la variable independiente tiene un efecto sobre la variación en la covariable
-    summarysup4 <- summary (supuesto4)
-    print (summarysup4)
-    
-    message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
+    if (sup == "s") {
+      
+      print ("A continuación se mostrarán 4 gráficas, que deben cumplir lo siguiente:")
+      
+      message("Residuals vs Fitted y Scale Location permiten observar la homogeneidad de varianzas:")
+      print("Los números que aparecen en la  gráfica a lado de cada punto representan el renglón en el que se encuentra ese residual; Ambas gráficas deben tener una línea con pendiente con tendencia a 0, y los puntos deben estar bien distribuidos en los ejes X y Y")
+      
+      message("Con Normal Q-Q  se ve si se cumple el supuesto de la distribución gaussiana de los residuales (distribución normal):")
+      print("La línea punteada debe estar de esquina a esquina y cada uno de los residuales debe de caer en la línea punteada o cerca de la línea punteada") 
+      
+      message ("Residuals vs Leverage (influencia) de los valores en el análisis o son pseudoréplicas; es para el tercer supuesto (Hay independencia entre los errores y las observaciones):")
+      print ("Si no se observa el enunciado de Distancia de Cook: nos representa que no hay un valor que sobresalga en la influencia de los valores, por lo que se cumple el supuesto.")
+      
+      # Nos da las gráficas por separado
+      # Y después muestra todas las gráficas en un mismo plot
+      
+      plot(ancova)
+      layout(matrix(c(1,2,3,4),2,2,))
+      plot(ancova)
+      
+      message ("Por último, se debe cumplir el supuesto: Los factores no afectan a la covariable. Esto se verifica con un anova de una vía. Si el valor de p es mayor a 0.05, el supuesto se cumple")
+      
+      supuesto4 <- aov (data [, cov] ~ data [ , ind], data) # Analiza si la variable independiente tiene un efecto sobre la variación en la covariable
+      summarysup4 <- summary (supuesto4)
+      print (summarysup4)
+      
+      message ("Si todos los supuestos se cumplen, el resultado de tu análisis es confiable")
+      
+    } else {
+      
+    }
+
     
   }  else {
   print ("Lo sentimos, no tenemos disponible ese análisis. Vuelve a cargar la función para reintroducir tus datos si crees que esto es un error.")
