@@ -5,7 +5,13 @@ output: html_document
 
 **Gabriela Chávez Reséndiz**
 
-* 
+* Creación del repositorio
+* Desarrollo de código de prompts para determinar el mejor análisis biestadístico
+* Desarrollo de código con el uso de condicionales para la sugerencia del análisis
+* Desarrollo de código para prueba de T, verificación de supuestos de regresión lineal y ANOVA
+* Desarrollo de código para gráficas de ANOVA
+* Avisos de requerimiento de paquetes
+* Adición de base de datos "datos_bioest_2024"
 
 **Mariana Gómez Becerra**
 
