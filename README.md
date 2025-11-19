@@ -57,6 +57,9 @@ Precargar las bases de datos para conocer las variables.
 
 En la carpeta 03_Results, se guardarán todos los resultados generados con el código de la carpeta 02_Scripts.
 
+La función MAGA tiene como objetivo principal el aprendizaje de principiantes en estadística, por lo que no genera archivos de resultado.
+Para guardar los resultados de los análisis, debe tomarse el código de ese análisis sin los condicionales y correrse por separado.
+
 #########################################################################################
 
 * 04_Docs
